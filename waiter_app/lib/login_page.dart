@@ -14,59 +14,137 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Image.asset(
-            'assets/loginUI.png',
-            fit: BoxFit.cover,
-            width: double.infinity,
+          Container(
             height: double.infinity,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Color(0xFF546E7A), Colors.red.shade700])),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 60.0, left: 22),
+              child: Text(
+                'Hello\nSign in',
+                style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
-          Center(
+          Padding(
+            padding: const EdgeInsets.only(top: 200.0),
             child: Container(
-              margin: EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+                color: Colors.white,
+              ),
+              height: double.infinity,
+              width: double.infinity,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 30.0),
+                padding: const EdgeInsets.only(left: 45.0, right: 45.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  //mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 80,
-                    ),
-                    Text(
-                      'Yönetici Girişi',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    TextFormField(
+                    TextField(
                       decoration: InputDecoration(
-                        labelText: 'Kullanıcı Adı',
+                        suffixIcon: Icon(
+                          Icons.check,
+                          color: Colors.grey,
+                        ),
+                        label: Text(
+                          'Gmail',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
                       ),
                     ),
-                    TextFormField(
+                    TextField(
                       decoration: InputDecoration(
-                        labelText: 'Şifre',
+                        suffixIcon: Icon(
+                          Icons.visibility_off,
+                          color: Colors.grey,
+                        ),
+                        label: Text(
+                          'Password',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        'Forgot Password',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                     SizedBox(
-                      height: 16.0,
+                      height: 70,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
+                    GestureDetector(
+                      onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(),
+                          ),
+                        );
                       },
-                      style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 128, 61, 56),
+                      child: Container(
+                        height: 50,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF546E7A), Colors.red.shade700],
+                          ),
+                        ),
+                        child: Center(
+                            child: Text(
+                          'Sign in',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        )),
                       ),
-                      child: Text('Giriş yap'),
                     ),
+                    SizedBox(
+                      height: 150,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Dont have account",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            'Sign up',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
