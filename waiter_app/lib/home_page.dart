@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:waiter_app/api.dart';
+import 'dart:ui';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+const apiKey = '4249615e5919f161a7a2c5bf97318683';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,10 +17,27 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController _tabController;
 
+  List<Map<String, dynamic>> _data = [];
+
+  Future<void> fetchData() async {
+    final response =
+        await http.get(Uri.parse('https://8275-92-44-184-170.ngrok-free.app/'));
+
+    if (response.statusCode == 100) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        _data = List<Map<String, dynamic>>.from(data['data']);
+      });
+    } else {
+      throw Exception('Veri çekme başarısız: ${response.statusCode}');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    fetchData();
   }
 
   @override
@@ -93,24 +117,37 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 controller: _tabController,
                 children: [
                   ListView.builder(
-                    itemCount: 4,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        margin: const EdgeInsets.only(right: 15, top: 10),
-                        width: 200,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          image: DecorationImage(
-                            image: AssetImage("assets/barista.jpeg"),
-                            fit: BoxFit.cover,
+                      itemCount: _data.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        final data = _data[index];
+                        final name = data['name'].toString();
+                        final count = data['count'] as int;
+                        final profil_img_url = data['profil_img_url'] as String;
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Api_detail(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 15, top: 10),
+                            width: 200,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                              image: DecorationImage(
+                                image: NetworkImage(profil_img_url),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
+                        );
+                      }),
                   ListView.builder(
                     itemCount: 4,
                     scrollDirection: Axis.horizontal,
@@ -164,42 +201,43 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               width: double.maxFinite,
               margin: const EdgeInsets.only(left: 20),
               child: ListView.builder(
-                  itemCount: 4,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (_, index) {
-                    return Container(
-                      margin: const EdgeInsets.only(right: 20),
-                      child: Column(
-                        children: [
-                          Container(
-                            //margin: const EdgeInsets.only(right: 20, top: 5),
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white,
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  "assets/" + image.keys.elementAt(index),
-                                ),
-                                fit: BoxFit.cover,
+                itemCount: 4,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (_, index) {
+                  return Container(
+                    margin: const EdgeInsets.only(right: 20),
+                    child: Column(
+                      children: [
+                        Container(
+                          //margin: const EdgeInsets.only(right: 20, top: 5),
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            image: DecorationImage(
+                              image: AssetImage(
+                                "assets/" + image.keys.elementAt(index),
                               ),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          Container(
-                            child: Text(
-                              image.values.elementAt(index),
-                              style: TextStyle(
-                                fontSize: 15, // Yazı boyutu
-                                fontWeight: FontWeight.bold, // Kalınlık
-                                color: Colors.blueGrey, // Yazı rengi
-                              ),
+                        ),
+                        Container(
+                          child: Text(
+                            image.values.elementAt(index),
+                            style: TextStyle(
+                              fontSize: 15, // Yazı boyutu
+                              fontWeight: FontWeight.bold, // Kalınlık
+                              color: Colors.blueGrey, // Yazı rengi
                             ),
-                          )
-                        ],
-                      ),
-                    );
-                  }),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
             )
           ],
         ),
