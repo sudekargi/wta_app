@@ -17,13 +17,13 @@ class _Api_detailState extends State<Api_detail> {
   List<Map<String, dynamic>> _data = [];
 
   Future<void> fetchData() async {
-    final response =
-        await http.get(Uri.parse('https://58b0-92-44-184-170.ngrok-free.app/'));
+    final response = await http
+        .get(Uri.parse('https://e9e5-194-27-127-217.ngrok-free.app/employee'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       setState(() {
-        _data = List<Map<String, dynamic>>.from(data['results']);
+        _data = List<Map<String, dynamic>>.from(data['data']);
       });
     } else {
       throw Exception('Veri çekme başarısız: ${response.statusCode}');

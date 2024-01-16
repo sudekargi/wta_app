@@ -20,10 +20,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<Map<String, dynamic>> _data = [];
 
   Future<void> fetchData() async {
-    final response =
-        await http.get(Uri.parse('https://8275-92-44-184-170.ngrok-free.app/'));
+    final response = await http
+        .get(Uri.parse('https://e9e5-194-27-127-217.ngrok-free.app/employee'));
 
-    if (response.statusCode == 100) {
+    if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       setState(() {
         _data = List<Map<String, dynamic>>.from(data['data']);
