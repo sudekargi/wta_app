@@ -1,24 +1,23 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 
-class Api_detail extends StatefulWidget {
+class Api_detail2 extends StatefulWidget {
   final String name;
-  final int count;
+  final double minutes;
   final String profil_img_url;
 
-  const Api_detail({
+  const Api_detail2({
     Key? key,
     required this.name,
-    required this.count,
+    required this.minutes,
     required this.profil_img_url,
   }) : super(key: key);
 
   @override
-  State<Api_detail> createState() => _Api_detailState();
+  State<Api_detail2> createState() => _Api_detailState();
 }
 
-class _Api_detailState extends State<Api_detail> {
+class _Api_detailState extends State<Api_detail2> {
   double screenWidth = 0;
   double screenHeight = 0;
 
@@ -70,7 +69,7 @@ class _Api_detailState extends State<Api_detail> {
               horizontal: screenWidth / 20,
             ),
             child: Text(
-              "Count: ${widget.count}",
+              "Minutes: ${widget.minutes}",
               style: const TextStyle(
                 fontWeight: FontWeight.w400,
                 color: Colors.black87,
@@ -78,53 +77,8 @@ class _Api_detailState extends State<Api_detail> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: SizedBox(
-              height: 200,
-              child: BarChart(
-                BarChartData(
-                  alignment: BarChartAlignment.spaceAround,
-                  maxY: widget.count.toDouble() + 10,
-                  barTouchData: BarTouchData(
-                    touchTooltipData: BarTouchTooltipData(
-                      tooltipBgColor: Colors.blueGrey,
-                    ),
-                    touchCallback: (BarTouchResponse, details) {},
-                    handleBuiltInTouches: true,
-                  ),
-                  borderData: FlBorderData(
-                    show: true,
-                    border: Border.all(
-                      color: const Color(0xff37434d),
-                      width: 1,
-                    ),
-                  ),
-                  barGroups: [
-                    BarChartGroupData(
-                      x: 0,
-                      barRods: [
-                        BarChartRodData(
-                            toY: widget.count.toDouble(), color: Colors.blue),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
   }
-}
-
-Widget leftTitleWidgets(double value, TitleMeta meta) {
-  const style = TextStyle();
-  String text = value.toString();
-  text = text + 'µs';
-  return FittedBox(
-    child: Text(text, style: style, textAlign: TextAlign.center),
-    fit: BoxFit.fitWidth,
-  );
 }
