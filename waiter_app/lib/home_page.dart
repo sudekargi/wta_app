@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> fetchData() async {
     final response = await http
-        .get(Uri.parse('https://e9e5-194-27-127-217.ngrok-free.app/employee'));
+        .get(Uri.parse('https://7753-194-27-127-217.ngrok-free.app/employee'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
@@ -129,7 +129,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Api_detail(),
+                                builder: (context) => Api_detail(
+                                  name: name,
+                                  count: count,
+                                  profil_img_url: profil_img_url,
+                                ),
                               ),
                             );
                           },
