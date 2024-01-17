@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -83,7 +82,8 @@ class _Api_detailState extends State<Api_detail> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: SizedBox(
               height: 200,
-              child: BarChart(BarChartData(
+              child: BarChart(
+                BarChartData(
                   alignment: BarChartAlignment.spaceAround,
                   maxY: widget.count.toDouble() + 10,
                   barTouchData: BarTouchData(
@@ -93,13 +93,13 @@ class _Api_detailState extends State<Api_detail> {
                     touchCallback: (BarTouchResponse, details) {},
                     handleBuiltInTouches: true,
                   ),
-                  titlesData: FlTitlesData(
+                  /*titlesData: FlTitlesData(
                       show: true,
                       leftTitles: AxisTitles(
                           sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: leftTitleWidgets,
-                      ))),
+                      ))),*/
                   /*titlesData: FlTitlesData(
                     leftTitles: SideTitles(showTitles: true, reservedSize: 40),
                     bottomTitles: SideTitles(
@@ -125,7 +125,9 @@ class _Api_detailState extends State<Api_detail> {
                             toY: widget.count.toDouble(), color: Colors.blue),
                       ],
                     ),
-                  ])),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
